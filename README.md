@@ -38,11 +38,16 @@ Instructions: How to setup Div Starter
 ---------
 1. **Install Div Library**
 
-	a) [Download/Clone from (github)](https://github.com/DivTruth/div-starter) to `/plugins/`
+	a) [Download/Clone from (github)](https://github.com/DivTruth/div-starter) to `/mu-plugins/`
 
-2. **Activate Plugin**
-3. **Begin Development** nothing magical will appear, but at this point you can install Div Site Application for custom project-specific development, or you can develop/add other Div Library plugins to extend its core functionality
-4. **For documentation** on how to develop with the Div Library, checkout [**the website**](http://divblend.com/div-library/)
+2. **Begin Development**
+
+	a) As a boilerplate, setup and familiarize yourself with the div-starter.php as it is the control panel for your application.
+	b) Look for **TODO** items as part of the inital setup
+	c) There are examples already setup and included for your convenience (widgets, shortcodes, and CPT model), if you do not wish for these to be used simple remove the include and appropriate files.
+	d) Save your setup for your own boilerplate for future projects
+
+3. **For documentation** on how to develop with the Div Library, checkout [**the website**](http://divblend.com/div-library/)
 
 Contributors
 ---------------
