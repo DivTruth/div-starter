@@ -12,7 +12,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-class DS_Widget_Banner extends DIV_Widget {
+class DIV_Widget_Banner extends DIV_Widget {
 
 	/**
 	 * @var string
@@ -21,15 +21,20 @@ class DS_Widget_Banner extends DIV_Widget {
 	 */
 	public $widget_template;
 
+	public $app;
+
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		$widget_template 			= STARTER()->path['widget_templates_dir'].'banner.php';
+		global $app_name;
+		$this->app 					= $app_name::instance();
+		$widget_template 			= $this->app->path['widget_templates_dir'].'banner.php';
+
 		$this->widget_cssclass    	= 'divstarter widget_banner';
 		$this->widget_description 	= __( "Add a banner image in the sidebar.", 'divstarter' );
 		$this->widget_id          	= 'divstarter_widget_banner';
-		$this->widget_name        	= __( 'DS: Banner', 'divstarter' );
+		$this->widget_name        	= __( 'DIV: Banner', 'divstarter' );
 		$this->settings           	= array(
 			'title'  => array(
 				'type'  => 'text',
@@ -57,4 +62,4 @@ class DS_Widget_Banner extends DIV_Widget {
 
 }
 
-register_widget( 'DS_Widget_Banner' );
+register_widget( 'DIV_Widget_Banner' );

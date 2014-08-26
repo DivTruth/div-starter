@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Div Starter Application
- * Plugin URI: http://divblend.com/div-site-application
+ * Plugin URI: http://divblend.com/div-starter
  * Description: This is a site boilerplate to create your own application with custom solutions for your project while extending the Div Library Plugin. 
  * Version: 0.1.0 (alpha)
  * Author: Div Blend Team
@@ -20,13 +20,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; # Exit if accessed directly
 }
 
+
 /**
  * Main DSA Class
  *
  * @class DSA
  * @version	1.0
  */
+global $app_name;
+$app_name = "div_starter";
+
 final class div_starter {
+
+	/**
+	 * @var string
+	 */
+	public $library;
 
 	/**
 	 * @var string
@@ -46,11 +55,75 @@ final class div_starter {
 	public $path = array();
 
 	/**
-	 * DSA Constructor.
-	 * @access public
-	 * @return DSA
+	 *  Application Class Name
+	 * @var 	string
+	 * @since   1.0
 	 */
-	public function __construct() {
+	public $name;
+
+	/**
+	 * @var Div_Library The single instance of the class
+	 * @since 1.0
+	 */
+	protected static $_instance = null;
+
+	/**
+	 * Main Div_Library Instance
+	 *
+	 * Ensures only one instance of Div_Library is loaded or can be loaded.
+	 *
+	 * @since 1.0
+	 * @static
+	 * @see DIV()
+	 * @return Div_Library - Main instance
+	 */
+	public static function instance($library = "") {
+		if ( is_null( self::$_instance ) ) {
+			self::$_instance = new self($library);
+		}
+		return self::$_instance;
+	}
+
+	/**
+	 * Cloning is forbidden.
+	 *
+	 * @since 1.0
+	 */
+	public function __clone() {
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'divlibrary' ), $this->version );
+	}
+
+	/**
+	 * Unserializing instances of this class is forbidden.
+	 *
+	 * @since 1.0
+	 */
+	public function __wakeup() {
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'divlibrary' ), $this->version );
+	}
+
+	/**
+	 * Auto-load in-accessible properties on demand.
+	 *
+	 * @param mixed $key
+	 * @return mixed
+	 */
+	public function __get( $key ) {
+		if ( method_exists( $this, $key ) ) {
+			return $this->$key();
+		}
+	}
+
+	/**
+	 * Starter Constructor.
+	 * @access public
+	 * @return Starter
+	 */
+	public function __construct($library) {
+		global $app_name;
+		$this->name 		= $app_name;
+		$this->library 		= $library;
+
 		// Auto-load classes on demand. This effectively creates a queue of autoload functions, and runs through each of them in the order they are defined.
 		if ( function_exists( "__autoload" ) ) {
 			spl_autoload_register( "__autoload" );
@@ -184,7 +257,10 @@ final class div_starter {
 	 */
 	public function include_widgets() {
 		include_once( $this->path['widgets_dir'].'class-widget-banner.php' );
+		add_action( 'starter_loaded', 'register_DS_Widget_Banner', 1);
+
 		// include_once( $this->path['widgets_dir'].'class-widget-text-image.php' );
+		// add_action( 'starter_loaded', 'register_DS_Widget_Text_Image', 1);
 	}
 
 	/**
@@ -198,7 +274,7 @@ final class div_starter {
 		// $this->user_agent = new DE_Detection();		# Detection class
 
 		// Init action
-		do_action( 'starter_loaded' );
+		do_action( 'starter_loaded', $this );
 	}
 
 	/**
@@ -228,22 +304,13 @@ final class div_starter {
  * Returns the main instance of DE to prevent the need to use globals.
  * @return STARTER
  */
-add_action( 'divlibrary_loaded', 'load_div_starter', 10, 1);
+if(class_exists('div_starter')) :
 
-function  load_div_starter ($library){
-    new div_starter($library);
-}  
+	add_action( 'divlibrary_loaded', 'STARTER', 10, 1);
 
+	function STARTER ($library){
+	    div_starter::instance($library);
+	}  
 
-// if(class_exists('div_starter')) :
-
-// 	add_action( 'divlibrary_loaded', function($div){
-// 		STARTER($div);
-// 	}, 10, 1);
-
-// 	function STARTER ($library){
-// 	    return new div_starter($library);
-// 	}  
-
-// endif;
+endif;
 ?>
