@@ -15,46 +15,51 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 class DIV_Widget_Banner extends DIV_Widget {
 
 	/**
-	 * @var string
+	 * @var array
 	 * Required to define template path of widget
-	 * Default: {div-starter}/templates/widgets/{widget}.php
+	 * Default: /{template->path}/{widget}.php
 	 */
-	public $widget_template;
+	public $template;
 
+	/**
+	 * @var instance of site_application
+	 */
 	public $app;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		global $app_name;
-		$this->app 					= $app_name::instance();
-		$widget_template 			= $this->app->path['widget_templates_dir'].'banner.php';
+		$this->app 					= site_application::instance();
+		$this->template 			= array(
+			'path' 		=> $this->app->path['template_path'].'widgets/',
+			'default' 	=> $this->app->path['widget_templates_dir']
+		);
 
-		$this->widget_cssclass    	= 'divstarter widget_banner';
-		$this->widget_description 	= __( "Add a banner image in the sidebar.", 'divstarter' );
-		$this->widget_id          	= 'divstarter_widget_banner';
-		$this->widget_name        	= __( 'DIV: Banner', 'divstarter' );
+		$this->widget_cssclass    	= 'widget_banner';
+		$this->widget_description 	= __( "Add a banner image in the sidebar.", 'divlibrary' );
+		$this->widget_id          	= 'banner';
+		$this->widget_name        	= __( 'DIV: Banner', 'divlibrary' );
 		$this->settings           	= array(
 			'title'  => array(
 				'type'  => 'text',
-				'std'   => __( 'Advertisement', 'divstarter' ),
-				'label' => __( 'Title:', 'divstarter' )
+				'std'   => __( 'Advertisement', 'divlibrary' ),
+				'label' => __( 'Title:', 'divlibrary' )
 			),
 			'image_id' => array(
 				'type'  => 'image',
 				'std'   => 0,
-				'label' => __( 'Select a Banner Image:', 'divstarter' )
+				'label' => __( 'Select a Banner Image:', 'divlibrary' )
 			),
 			'link'  => array(
 				'type'  => 'text',
-				'std'   => __( 'http://', 'divstarter' ),
-				'label' => __( 'Set a link (optional):', 'divstarter' )
+				'std'   => __( 'http://', 'divlibrary' ),
+				'label' => __( 'Set a link (optional):', 'divlibrary' )
 			),
 			'new_window' => array(
 				'type'  => 'checkbox',
 				'std'   => 1,
-				'label' => __( 'Open in a new window?', 'divstarter' )
+				'label' => __( 'Open in a new window?', 'divlibrary' )
 			),
 		);
 		parent::__construct();
