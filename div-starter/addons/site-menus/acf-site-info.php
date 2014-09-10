@@ -317,6 +317,42 @@ register_field_group(array (
                         'readonly' => 0,
                         'disabled' => 0,
                 ),
+                array (
+                        'key' => 'field_eh9813wg87wetr',
+                        'label' => 'Analytics',
+                        'name' => '',
+                        'prefix' => '',
+                        'type' => 'tab',
+                        'instructions' => '',
+                        'required' => 1,
+                        'conditional_logic' => 0,
+                ),
+                array (
+                        'key' => 'field_987gh198732',
+                        'label' => 'Google Analytics',
+                        'name' => 'google_analytics',
+                        'prefix' => '',
+                        'type' => 'textarea',
+                        'instructions' => 'Insert the google analytics tracking code to be used on the site <strong style="float:right;">(ACF: google_analytics)</strong>',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'default_value' => '',
+                        'placeholder' => '<script>
+  (function(i,s,o,g,r,a,m){i["GoogleAnalyticsObject"]=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,"script","//www.google-analytics.com/analytics.js","ga");
+
+  ga("create", "UA-XXXXXXXX-X":, "auto");
+  ga("send", "pageview");
+
+</script>',
+                        'prepend' => '',
+                        'append' => '',
+                        'maxlength' => '',
+                        'readonly' => 0,
+                        'disabled' => 0,
+                ),
         ),
         'location' => array (
                 array (

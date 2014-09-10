@@ -53,6 +53,11 @@ function init_site_menus() {
 	
 }
 
+add_action('wp_footer','enque_ga_script');
+function enque_ga_script(){
+	the_field('google_analytics','options');
+}
+
 /* Register ACF Fields */
 include_once( dirname(__FILE__).'/acf-site-options.php' );
 include_once( dirname(__FILE__).'/acf-home-options.php' );
