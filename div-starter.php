@@ -36,7 +36,7 @@ final class site_application {
 	/**
 	 * @var string
 	 */
-	public $version = '0.2.0';
+	public $version = '0.2.1';
 
 	/**
 	 * @var string
