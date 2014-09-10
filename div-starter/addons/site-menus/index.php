@@ -60,6 +60,5 @@ function enque_ga_script(){
 
 /* Register ACF Fields */
 include_once( dirname(__FILE__).'/acf-site-options.php' );
-include_once( dirname(__FILE__).'/acf-home-options.php' );
 include_once( dirname(__FILE__).'/acf-site-info.php' ); 
 ?>
