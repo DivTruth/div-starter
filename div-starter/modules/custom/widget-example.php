@@ -36,7 +36,7 @@ class Widget_Example extends DIV_Widget {
 			'default' 	=> dirname(__FILE__).'/'
 		);
 
-		$this->widget_cssclass    = 'divlibrary widget_custom_widget';
+		$this->widget_cssclass    = 'divlibrary custom_widget';
 		$this->widget_description = __( "Custom CPT Example widget", 'divlibrary' );
 		$this->widget_id          = 'template_example_widget'; #template file name
 		$this->widget_name        = __( 'DS: Module Example', 'divlibrary' );
