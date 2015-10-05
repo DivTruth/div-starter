@@ -6,6 +6,19 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly ?>
 
-<?php #TODO copy template from theme and modify ?>
+<?php get_header(); ?>
 
-<?php _e('This is the page template for your custom post type'); ?>
+	<div id="content"> 
+    	<div id="inner-content" class="wrap clearfix"><div id="main" class="clearfix" role="main">    
+
+		    <?php _e('This is the page template for your custom post type'); ?>
+
+			<?php 
+			$custom = new custom();
+			$test = $custom->loop();
+			print_r($test);
+		    ?>
+
+		</div>
+	</div>
+<?php get_footer(); ?>
