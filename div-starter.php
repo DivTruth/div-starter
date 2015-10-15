@@ -36,7 +36,7 @@ final class site_application {
 	/**
 	 * @var string
 	 */
-	public $version = '0.2.1';
+	public $version = '0.2.2';
 
 	/**
 	 * @var string
@@ -124,9 +124,9 @@ final class site_application {
 		$this->setup_modules();
 
 		# Hooks
-		add_action( 'widgets_init', array( $this, 'include_widgets' ), 20 ); # After Div Library (10)
+		add_action( 'widgets_init', array( $this, 'include_widgets' ), 20 ); 	# After Div Library (10)
 		add_action( 'init', array( $this, 'init' ), 0 );
-		// add_action( 'init', array( 'DS_Shortcodes', 'init' ), 20 );
+		add_action( 'init', array( 'DS_Shortcodes', 'init' ), 20 ); 			# DS Shortcodes (20)
 		
 		# Setup any theme environment settings
 		add_action( 'after_setup_theme', array( $this, 'setup_environment' ) );
@@ -158,6 +158,7 @@ final class site_application {
 			
 			$this->path['appearance_url']	= $this->path['url'].'appearance/';
 			$this->path['images_url']		= $this->path['appearance_url'].'images/';
+			$this->path['css_url']			= $this->path['appearance_url'].'css/';
 		
 		#includes
 		$this->path['includes_dir']		= $this->path['dir'] .'includes/';
@@ -183,6 +184,10 @@ final class site_application {
 	 */
 	private function includes() {
 		foreach( glob($this->path['includes_dir'] . 'class-*.php') as $class_path )
+			require_once( $class_path );
+		
+		/* Include Shortcodes */
+		foreach( glob($this->path['includes_dir'].'shortcodes/' . 'class-*.php') as $class_path )
 			require_once( $class_path );
 
 		if ( is_admin() ) {
