@@ -201,7 +201,7 @@ acf_add_local_field_group(array (
 		array (
 			'key' => 'field_5616369181698',
 			'label' => 'Icon Sets',
-			'name' => '_copy',
+			'name' => 'icon_sets',
 			'type' => 'tab',
 			'instructions' => '',
 			'required' => 0,
@@ -320,7 +320,7 @@ acf_add_local_field_group(array (
 								'class' => '',
 								'id' => '',
 							),
-							'default_value' => '#ffffff',
+							'default_value' => '#333333',
 						),
 						array (
 							'key' => 'field_568923aea3fcb',
