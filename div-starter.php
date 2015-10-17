@@ -36,7 +36,7 @@ final class site_application {
 	/**
 	 * @var string
 	 */
-	public $version = '0.2.1';
+	public $version = '0.2.2';
 
 	/**
 	 * @var string
@@ -54,7 +54,7 @@ final class site_application {
 	 * @var The single instance of the site_application class
 	 * @since 1.0
 	 */
-	protected static $_instance = null;
+	private static $_instance = null;
 
 	/**
 	 * Main site_application Instance
@@ -78,7 +78,7 @@ final class site_application {
 	 * @since 1.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'divlibrary' ), $this->version );
+		_doing_it_wrong( __FUNCTION__, __( 'The Site Application uses a singleton pattern so cloning is prohibited', 'divlibrary' ), $this->version );
 	}
 
 	/**
@@ -87,7 +87,7 @@ final class site_application {
 	 * @since 1.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'divlibrary' ), $this->version );
+		_doing_it_wrong( __FUNCTION__, __( 'The Site Application uses a singleton pattern so __wakeup is prohibited', 'divlibrary' ), $this->version );
 	}
 
 	/**
@@ -107,7 +107,7 @@ final class site_application {
 	 * @access public
 	 * @return Site Application
 	 */
-	public function __construct($library) {
+	private function __construct($library) {
 		# Pass instance of Div Library upon construction
 		$this->library = $library;
 
@@ -124,9 +124,11 @@ final class site_application {
 		$this->setup_modules();
 
 		# Hooks
-		add_action( 'widgets_init', array( $this, 'include_widgets' ), 20 ); # After Div Library (10)
-		add_action( 'init', array( $this, 'init' ), 0 );
-		// add_action( 'init', array( 'DS_Shortcodes', 'init' ), 20 );
+		add_action( 'widgets_init', array( $this, 'include_widgets' ), 20 ); 		# After Div Library (10)
+		add_action( 'init', array( $this, 'init' ), 0 );							# Init site_application when WordPress Initialises. (0)
+		add_action( 'init', array( 'DS_Shortcodes', 'init' ), 20 ); 				# DS Shortcodes (20)
+		add_action( 'wp_enqueue_scripts', array( $this, 'register_styles'), 1 );	# Register styles from CSS directory (1)
+		add_action( 'admin_enqueue_scripts', array( $this, 'register_styles'), 1 );	# Register Admin styles from CSS directory (1)
 		
 		# Setup any theme environment settings
 		add_action( 'after_setup_theme', array( $this, 'setup_environment' ) );
@@ -155,9 +157,11 @@ final class site_application {
 		#appearance
 		$this->path['appearance_dir']	= $this->path['dir'] .'appearance/';
 		$this->path['images_dir']		= $this->path['appearance_dir'].'images/';
+		$this->path['css_dir']		= $this->path['appearance_dir'].'css/';
 			
 			$this->path['appearance_url']	= $this->path['url'].'appearance/';
 			$this->path['images_url']		= $this->path['appearance_url'].'images/';
+			$this->path['css_url']			= $this->path['appearance_url'].'css/';
 		
 		#includes
 		$this->path['includes_dir']		= $this->path['dir'] .'includes/';
@@ -183,6 +187,10 @@ final class site_application {
 	 */
 	private function includes() {
 		foreach( glob($this->path['includes_dir'] . 'class-*.php') as $class_path )
+			require_once( $class_path );
+		
+		/* Include Shortcodes */
+		foreach( glob($this->path['includes_dir'].'shortcodes/' . 'class-*.php') as $class_path )
 			require_once( $class_path );
 
 		if ( is_admin() ) {
@@ -232,13 +240,32 @@ final class site_application {
 	 * Init site_application when WordPress Initialises.
 	 */
 	public function init() {
-		// Before init action
+		# Before init action
 		do_action( 'before_starter_init' );
 
 		// Load Class instances
 
-		// Init action
-		do_action( 'site_application_loaded', $this );
+		# Init action
+		do_action( 'after_starter_init', $this );
+	}
+
+	/**
+	 * Register all styles included the appearance/css directory to be enqued as needed
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function register_styles() {
+		foreach( glob($this->path['css_dir'] . '*.css') as $css_path ){
+			$url_path = $this->path['css_url'] . basename($css_path);
+			$style = basename($css_path, ".css");
+			wp_register_style( 'div-'.$style, $url_path, array(), $this->version );
+		}
+		if ( is_admin() ) {
+			# Admin only scripts
+			wp_enqueue_style( 'div-admin' );
+		}	
+		do_action('div_register_styles');
 	}
 
 	/**
