@@ -54,7 +54,7 @@ final class site_application {
 	 * @var The single instance of the site_application class
 	 * @since 1.0
 	 */
-	protected static $_instance = null;
+	private static $_instance = null;
 
 	/**
 	 * Main site_application Instance
@@ -78,7 +78,7 @@ final class site_application {
 	 * @since 1.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'divlibrary' ), $this->version );
+		_doing_it_wrong( __FUNCTION__, __( 'The Site Application uses a singleton pattern so cloning is prohibited', 'divlibrary' ), $this->version );
 	}
 
 	/**
@@ -87,7 +87,7 @@ final class site_application {
 	 * @since 1.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'divlibrary' ), $this->version );
+		_doing_it_wrong( __FUNCTION__, __( 'The Site Application uses a singleton pattern so __wakeup is prohibited', 'divlibrary' ), $this->version );
 	}
 
 	/**
@@ -107,7 +107,7 @@ final class site_application {
 	 * @access public
 	 * @return Site Application
 	 */
-	public function __construct($library) {
+	private function __construct($library) {
 		# Pass instance of Div Library upon construction
 		$this->library = $library;
 
