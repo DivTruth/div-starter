@@ -22,7 +22,7 @@ function load_social_icon_addon(){
 	if(class_exists('Social_Icon')){
 		/* Load Social Icon class */
 		$social_icons = new Social_Icon();
-		add_action( 'after_setup_theme', array($social_icons, 'init') );
+		add_action( 'setup_theme', array($social_icons, 'init') );
 	}
 }
 
