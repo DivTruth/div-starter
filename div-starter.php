@@ -195,7 +195,7 @@ final class site_application {
 
 		if ( is_admin() ) {
 			# Admin only scripts
-			// include_once( 'includes/admin.php' );
+			include_once( $this->path['includes_dir'].'admin/class-ds-admin.php' );
 		}
 
 		if ( defined( 'DOING_AJAX' ) ) {
