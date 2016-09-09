@@ -2,11 +2,11 @@
 /**
  * Plugin Name: Div Starter Application
  * Plugin URI: http://divblend.com/div-starter
- * Description: This is a site boilerplate to create your own application with custom solutions for your project while extending the Div Library Plugin. 
- * Version: 0.2.2 (alpha)
+ * Description: This is a site application boilerplate to create your own application with custom solutions for your project while extending the Div Library Plugin. 
+ * Version: 0.3.0 (beta)
  * Author: Div Blend Team
  * Author URI: http://divblend.com/div-blend-contributors/
- * Div Library: 1.0
+ * Div Library: 0.3.0
  * Requires at least: 3.8
  * Tested up to: 3.9
  *
@@ -16,9 +16,7 @@
  * @link      	@TODO http://projectsite.com
  * @copyright 	@TODO 2014 Your name or company name
  */
-if ( ! defined( 'ABSPATH' ) ) {
-	exit; # Exit if accessed directly
-}
+if ( ! defined( 'ABSPATH' ) ) exit; # Exit if accessed directly
 
 /**
  * Main site_application Class
@@ -29,40 +27,49 @@ if ( ! defined( 'ABSPATH' ) ) {
 final class site_application {
 	
 	/**
+	 * Site application directory name
+	 * 
+	 * NOTE: If you rename the main directory, adjust accordingly
+	 * 
 	 * @var string
 	 */
-	public $directory = 'div-starter'; #TODO: If you change directory name, adjust accordingly
+	public $directory = 'div-starter'; #TODO: 
 
 	/**
+	 * Site Application version
+	 * 
 	 * @var string
 	 */
-	public $version = '0.2.2';
+	public $version = '1.0';
 
 	/**
+	 * Div Library instance
+	 * 
 	 * @var string
 	 */
 	public $library;
 	
 	/**
 	 * Path Definitions
+	 * 
 	 * @var 	array
-	 * @since   1.0
 	 */
 	public $path = array();
 
 	/**
-	 * @var The single instance of the site_application class
-	 * @since 1.0
+	 * The single instance of the class
+	 * 
+	 * @var site_application
 	 */
-	private static $_instance = null;
-
+	protected static $_instance = null;
+	
 	/**
 	 * Main site_application Instance
-	 * Ensures only one instance of site_application is loaded or can be loaded.
+	 * 
+	 * NOTE: Ensures only one instance of site_application is loaded or can be loaded.
 	 *
-	 * @since 1.0
 	 * @static
-	 * @see $app
+	 * @see site_application()
 	 * @return site_application - Main instance
 	 */
 	public static function instance($library = "") {
@@ -74,67 +81,84 @@ final class site_application {
 
 	/**
 	 * Cloning is forbidden.
-	 *
-	 * @since 1.0
 	 */
 	public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'The Site Application uses a singleton pattern so cloning is prohibited', 'divlibrary' ), $this->version );
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'divlibrary' ), '1.0' );
 	}
 
 	/**
 	 * Unserializing instances of this class is forbidden.
-	 *
-	 * @since 1.0
 	 */
 	public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'The Site Application uses a singleton pattern so __wakeup is prohibited', 'divlibrary' ), $this->version );
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'divlibrary' ), '1.0' );
 	}
 
 	/**
-	 * Auto-load in-accessible properties on demand.
-	 *
-	 * @param mixed $key
-	 * @return mixed
+	 * site_application Constructor.
 	 */
-	public function __get( $key ) {
-		if ( method_exists( $this, $key ) ) {
-			return $this->$key();
-		}
-	}
-
-	/**
-	 * Site Application Constructor.
-	 * @access public
-	 * @return Site Application
-	 */
-	private function __construct($library) {
+	public function __construct($library) {
 		# Pass instance of Div Library upon construction
 		$this->library = $library;
 
 		# Define application paths
 		$this->define_paths();
 
-		# Include required files
-		$this->includes();
+		# Auto load library classes
+		$this->autoload();
 
 		# Install Add-ons
-		$this->setup_add_ons();
+		// $this->setup_add_ons();
 
 		# Install Custom Post Type Modules
-		$this->setup_modules();
+		// $this->setup_modules();
 
 		# Hooks
-		add_action( 'widgets_init', array( $this, 'include_widgets' ), 20 ); 		# After Div Library (10)
-		add_action( 'init', array( $this, 'init' ), 0 );							# Init site_application when WordPress Initialises. (0)
-		add_action( 'init', array( 'DS_Shortcodes', 'init' ), 20 ); 				# DS Shortcodes (20)
-		add_action( 'wp_enqueue_scripts', array( $this, 'register_styles'), 1 );	# Register styles from CSS directory (1)
-		add_action( 'admin_enqueue_scripts', array( $this, 'register_styles'), 1 );	# Register Admin styles from CSS directory (1)
+		$this->hooks();
 		
 		# Setup any theme environment settings
 		add_action( 'after_setup_theme', array( $this, 'setup_environment' ) );
 
 		# Loaded action
 		do_action( 'site_application_loaded' );
+	}
+
+	/**
+	 * Register auto-loader methods
+	 * 
+	 * NOTE: Auto-load classes on demand. This effectively creates a queue of autoload 
+	 * functions, and runs through each of them in the order they are defined
+	 */
+	private function autoload(){
+		spl_autoload_register( array( $this, 'includes' ) );
+	}
+
+	/**
+	 * Autoload the include classes
+	 *
+	 * @param      string  $class
+	 */
+	private function includes( $class ) {
+		if( is_file($this->path['includes_dir'].'class-'.$class.'.php') )
+			require $this->path['includes_dir'].'class-'.$class.'.php';
+		else if( is_file($this->path['includes_dir'].'fields/'.$class.'.php') )
+			require $this->path['includes_dir'].'fields/'.$class.'.php';
+
+		# Admin only scripts
+		// if ( is_admin() )
+
+		# Ajax functions for admin and the front-end
+		// if ( defined( 'DOING_AJAX' ) )
+
+		# Frontend only Scripts
+		// if ( ! is_admin() || defined( 'DOING_AJAX' ) )
+	}
+
+	/**
+	 * Setup action and filter hooks
+	 */
+	private function hooks(){
+		// add_action( 'widgets_init', array( $this, 'include_widgets' ), 20 ); # After Div Library (10)
+		add_action( 'init', array( $this, 'init' ), 0 );
 	}
 
 	/**
@@ -157,11 +181,9 @@ final class site_application {
 		#appearance
 		$this->path['appearance_dir']	= $this->path['dir'] .'appearance/';
 		$this->path['images_dir']		= $this->path['appearance_dir'].'images/';
-		$this->path['css_dir']		= $this->path['appearance_dir'].'css/';
 			
 			$this->path['appearance_url']	= $this->path['url'].'appearance/';
 			$this->path['images_url']		= $this->path['appearance_url'].'images/';
-			$this->path['css_url']			= $this->path['appearance_url'].'css/';
 		
 		#includes
 		$this->path['includes_dir']		= $this->path['dir'] .'includes/';
@@ -180,34 +202,6 @@ final class site_application {
 		
 			$this->path['templates_url']		= $this->path['url'].'/templates/';
 			$this->path['widget_templates_url']	= $this->path['templates_url'].'widgets/';
-	}
-
-	/**
-	 * Include required core files used in admin and on the frontend.
-	 */
-	private function includes() {
-		foreach( glob($this->path['includes_dir'] . 'class-*.php') as $class_path )
-			require_once( $class_path );
-		
-		/* Include Shortcodes */
-		foreach( glob($this->path['includes_dir'].'shortcodes/' . 'class-*.php') as $class_path )
-			require_once( $class_path );
-
-		if ( is_admin() ) {
-			# Admin only scripts
-			include_once( $this->path['includes_dir'].'admin/class-ds-admin.php' );
-		}
-
-		if ( defined( 'DOING_AJAX' ) ) {
-			# Ajax functions for admin and the front-end
-			// include_once( 'includes/ajax.php' );
-		}
-
-		if ( ! is_admin() || defined( 'DOING_AJAX' ) ) {
-			# Frontend only Scripts
-			// include_once( 'includes/frontend-scripts.php' );	
-		}
-
 	}
 	
 	/**
@@ -237,39 +231,20 @@ final class site_application {
 	}
 
 	/**
-	 * Init site_application when WordPress Initialises.
+	 * Init site_application when WordPress Initialises
 	 */
 	public function init() {
 		# Before init action
 		do_action( 'before_starter_init' );
 
-		// Load Class instances
+		# Load Class instances
 
 		# Init action
-		do_action( 'after_starter_init', $this );
+		do_action( 'site_application_loaded', $this );
 	}
 
 	/**
-	 * Register all styles included the appearance/css directory to be enqued as needed
-	 *
-	 * @access public
-	 * @return void
-	 */
-	public function register_styles() {
-		foreach( glob($this->path['css_dir'] . '*.css') as $css_path ){
-			$url_path = $this->path['css_url'] . basename($css_path);
-			$style = basename($css_path, ".css");
-			wp_register_style( 'div-'.$style, $url_path, array(), $this->version );
-		}
-		if ( is_admin() ) {
-			# Admin only scripts
-			wp_enqueue_style( 'div-admin' );
-		}	
-		do_action('div_register_styles');
-	}
-
-	/**
-	 * Ensure theme and server variable compatibility and setup image sizes..
+	 * Ensure theme and server variable compatibility and setup image sizes
 	 */
 	public function setup_environment() {
 		
