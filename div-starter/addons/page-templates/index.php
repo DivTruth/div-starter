@@ -10,7 +10,6 @@
  */
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-
 if ( ! function_exists( 'site_app_page_templates' ) ) {
   
 	/**
@@ -24,12 +23,11 @@ if ( ! function_exists( 'site_app_page_templates' ) ) {
 
 		$files = array_diff( scandir(__DIR__.'/templates/',1), array('..', '.') );
 		foreach( $files as $file)
-			$templates[$file] = preg_replace('/\\.[^.\\s]{3,4}$/', '', DIV_Helper::beautify($file) );
+			$templates[$file] = preg_replace('/\\.[^.\\s]{3,4}$/', '', DIV\services\helper::beautify($file) );
 
 		new DIV_Template( $templates, __DIR__.'/templates/' );
 	}
 	site_app_page_templates();  
-
 
 }
 
@@ -48,10 +46,11 @@ if ( ! function_exists( 'theme_page_templates' ) ) {
 
 			$files = array_diff( scandir(get_stylesheet_directory().'/'.$template_dir,1), array('..', '.') );
 			foreach( $files as $file)
-				$templates[$file] = preg_replace('/\\.[^.\\s]{3,4}$/', '', DIV_Helper::beautify($file) );
+				$templates[$file] = preg_replace('/\\.[^.\\s]{3,4}$/', '', DIV\services\helper::beautify($file) );
 
 			new DIV_Template( $templates, get_stylesheet_directory().'/'.$template_dir );
 		}
 	}
 	theme_page_templates();
+	
 }
