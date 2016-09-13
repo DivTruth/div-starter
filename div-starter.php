@@ -33,7 +33,7 @@ final class site_application {
 	 * 
 	 * @var string
 	 */
-	public $directory = 'div-starter'; #TODO: 
+	public $directory = 'div-starter';
 
 	/**
 	 * Site Application version
@@ -107,10 +107,10 @@ final class site_application {
 		$this->autoload();
 
 		# Install Add-ons
-		// $this->setup_add_ons();
+		$this->setup_add_ons();
 
 		# Install Custom Post Type Modules
-		// $this->setup_modules();
+		$this->setup_modules();
 
 		# Hooks
 		$this->hooks();
@@ -145,12 +145,7 @@ final class site_application {
 
 		# Admin only scripts
 		// if ( is_admin() )
-
-		# Ajax functions for admin and the front-end
-		// if ( defined( 'DOING_AJAX' ) )
-
-		# Frontend only Scripts
-		// if ( ! is_admin() || defined( 'DOING_AJAX' ) )
+		// 	require $this->path['includes_dir'].'admin/class-'.$class.'.php';
 	}
 
 	/**
@@ -217,9 +212,10 @@ final class site_application {
 	 * Install CPT Modules
 	 */
 	public function setup_modules() {
+		do_action('div_init_modules');
 		foreach( glob($this->path['modules_dir'] . '*/_*.php') as $class_path )
 			require_once( $class_path );
-		do_action('div_init_modules');
+		do_action('after_setup_modules');
 	}
 
 	/**
