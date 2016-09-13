@@ -57,6 +57,16 @@ class Site_Menu {
 				'redirect'		=> true
 			));
 
+			/* Child Menu: Site Settings */
+			acf_add_options_page(array(
+				'page_title' 	=> 'Application Settings',
+				'menu_title'	=> 'Settings',
+				'menu_slug' 	=> 'site-settings',
+				'capability'	=> 'edit_posts',
+				'parent_slug'	=> 'site-options',
+				'redirect'		=> false
+			));
+
 			/* Child Menu: Site Information */
 			acf_add_options_page(array(
 				'page_title' 	=> 'Site Information Details',

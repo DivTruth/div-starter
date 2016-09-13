@@ -7,11 +7,6 @@
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-if(class_exists('custom')){
-  $custom = new custom();
-  add_action( 'plugins_loaded', array($custom, 'init') );
-}
-
 class custom extends DIV_Module{
 
   public function __construct(){
@@ -27,10 +22,9 @@ class custom extends DIV_Module{
 
 }
 
-/** CUSTOM FUNCTIONS ******************************************************************/
-
-function custom_cpt_function_example(){
-  #custom cpt-specific function code here
+if(class_exists('custom')){
+  $custom = new custom();
+  add_action( 'plugins_loaded', array($custom, 'init') );
 }
 
 ?>

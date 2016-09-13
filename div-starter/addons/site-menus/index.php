@@ -16,8 +16,12 @@
 add_action( 'plugins_loaded', 'load_site_menus' );
 
 function load_site_menus(){
-	include_once( dirname(__FILE__).'/site-menu.php' );		# Load Addon Class
-	include_once( dirname(__FILE__).'/acf-site-info.php' );	# Register ACF Fields
+	# Load Addon Class
+	include_once( dirname(__FILE__).'/site-menu.php' );
+	# Register ACF Fields
+	include_once( dirname(__FILE__).'/acf-site-info.php' );	
+	include_once( dirname(__FILE__).'/acf-site-settings.php' );
+	# Build Site Menus
 	if(class_exists('Site_Menu')){
 		/* Load Site Menu class */
 		$site_menu = new Site_Menu();

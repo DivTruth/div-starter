@@ -1,13 +1,16 @@
 <?php 
 /*
 Feature Name:   ACF Fields: Site Information
-Description:    Make it is to keep the company or site details in one place to use throughout theme development
+Description:    Settings to keep the company or site details in one place to use throughout theme development
 Dependencies:   ACF
 */
 
-if( function_exists('register_field_group') ):
+if( function_exists('acf_add_local_field_group') ):
 
-register_field_group(array (
+/**
+ * Site Information
+ */
+acf_add_local_field_group(array (
         'key' => 'group_540652e7b47b9',
         'title' => 'Site Information',
         'fields' => array (
