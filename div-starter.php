@@ -106,6 +106,9 @@ final class site_application {
 		# Auto load library classes
 		$this->autoload();
 
+		# Install Admin adjustments
+		$this->admin();
+
 		# Install Add-ons
 		$this->setup_add_ons();
 
@@ -143,9 +146,7 @@ final class site_application {
 		else if( is_file($this->path['includes_dir'].'fields/'.$class.'.php') )
 			require $this->path['includes_dir'].'fields/'.$class.'.php';
 
-		# Admin only scripts
-		// if ( is_admin() )
-		// 	require $this->path['includes_dir'].'admin/class-'.$class.'.php';
+		
 	}
 
 	/**
@@ -198,21 +199,34 @@ final class site_application {
 			$this->path['templates_url']		= $this->path['url'].'/templates/';
 			$this->path['widget_templates_url']	= $this->path['templates_url'].'widgets/';
 	}
+
+	/**
+	 * Install admin only scripts
+	 */
+	private function admin(){
+		if ( is_admin() ) {
+			do_action('before_setup_admin');
+			foreach( glob($this->path['includes_dir'] . 'admin/*.php') as $class_path )
+				require_once( $class_path );
+			do_action('after_setup_admin');
+		}
+	}
 	
 	/**
 	 * Install Add-Ons
 	 */
 	public function setup_add_ons() {
+		do_action('before_setup_add_ons');
 		foreach( glob($this->path['addons_dir'] . '*/index.php') as $class_path )
 			require_once( $class_path );
-		do_action('div_init_addons');
+		do_action('after_setup_add_ons');
 	}
 
 	/**
 	 * Install CPT Modules
 	 */
 	public function setup_modules() {
-		do_action('div_init_modules');
+		do_action('before_setup_modules');
 		foreach( glob($this->path['modules_dir'] . '*/_*.php') as $class_path )
 			require_once( $class_path );
 		do_action('after_setup_modules');
