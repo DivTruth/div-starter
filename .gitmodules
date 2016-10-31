@@ -7,6 +7,3 @@
 [submodule "div-starter/addons/page-templates"]
 	path = div-starter/addons/page-templates
 	url = git@github.com:DivTruth/page-templates-addon.git
-[submodule "div-starter/addons/roles-and-permissions"]
-	path = div-starter/addons/roles-and-permissions
-	url = https://github.com/DivTruth/roles-and-permissions-addon
