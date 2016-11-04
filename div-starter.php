@@ -3,10 +3,10 @@
  * Plugin Name: Div Starter Application
  * Plugin URI: http://divblend.com/div-starter
  * Description: This is a site application boilerplate to create your own application with custom solutions for your project while extending the Div Library Plugin. 
- * Version: 0.3.0 (beta)
+ * Version: 0.4.0 (beta)
  * Author: Div Blend Team
  * Author URI: http://divblend.com/div-blend-contributors/
- * Div Library: 0.3.0
+ * Div Library: 0.4.0
  * Requires at least: 3.8
  * Tested up to: 3.9
  *
@@ -40,7 +40,7 @@ final class site_application {
 	 * 
 	 * @var string
 	 */
-	public $version = '1.0';
+	public $version = '0.4.0';
 
 	/**
 	 * Div Library instance
