@@ -1,0 +1,6 @@
+[submodule "div-starter/addons/oauth"]
+	path = div-starter/addons/oauth
+	url = git@github.com:DivTruth/oauth-addon.git
+[submodule "div-starter/addons/settings"]
+	path = div-starter/addons/settings
+	url = git@github.com:DivTruth/settings-addon.git
