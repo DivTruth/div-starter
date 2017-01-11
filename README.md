@@ -1,7 +1,7 @@
 Div Starter - Beta
 ===================
 
-Div Starter is a boilerplate for the Site Application (within [`mu-plugins`](http://codex.wordpress.org/Must_Use_Plugins)), part of the [Div Blend Package](http://divblend.com/div-blend-package/). For more information checkout [The Div Blend Approach](http://divblend.com/div-blend/) and our campaign for **#TheWordPressWay**. In an attempt to encourage this Site Application practice within WordPress, Div Starter was designed to harness the tools built into [Div Library](https://github.com/DivTruth/div-library). 
+Div Starter is a boilerplate for the **Site Application** (within [`mu-plugins`](http://codex.wordpress.org/Must_Use_Plugins)), part of the [Div Blend Package](http://divblend.com/div-blend-package/). For more information checkout [The Div Blend Approach](http://divblend.com/div-blend/) and our campaign for **#TheWordPressWay**. In an attempt to encourage this Site Application practice within WordPress, Div Starter was designed to harness the tools built into [Div Library](https://github.com/DivTruth/div-library). 
 
 Be sure to read more about this on the [Div Starter Page](http://divblend.com/div-starter). Also, please read [our philosophy](http://divblend.com/div-blend-philosophy/) and consider _why_ we have abstracted these components the way we have so that you can better understand the intention and scope of the Div Blend project as a whole. 
 
