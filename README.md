@@ -1,7 +1,7 @@
 Div Starter - Beta
 ===================
 
-Div Starter is a boilerplate for the Site Application (within [`mu-plugins`](http://codex.wordpress.org/Must_Use_Plugins)), part of the [Div Blend Package](http://divblend.com/div-blend-package/). For more information checkout [The Div Blend Approach](http://divblend.com/div-blend/) and our campaign for **#TheWordPressWay**. In an attempt to encourage this Site Application practice within WordPress, Div Starter was designed to harness the tools built into [Div Library](https://github.com/DivTruth/div-library). 
+Div Starter is a boilerplate for the **Site Application** (within [`mu-plugins`](http://codex.wordpress.org/Must_Use_Plugins)), part of the [Div Blend Package](http://divblend.com/div-blend-package/). For more information checkout [The Div Blend Approach](http://divblend.com/div-blend/) and our campaign for **#TheWordPressWay**. In an attempt to encourage this Site Application practice within WordPress, Div Starter was designed to harness the tools built into [Div Library](https://github.com/DivTruth/div-library). 
 
 Be sure to read more about this on the [Div Starter Page](http://divblend.com/div-starter). Also, please read [our philosophy](http://divblend.com/div-blend-philosophy/) and consider _why_ we have abstracted these components the way we have so that you can better understand the intention and scope of the Div Blend project as a whole. 
 
@@ -31,10 +31,14 @@ Quick Start
 2. **Begin Development**
 
 	a) As a boilerplate, setup and familiarize yourself with the div-starter.php as it is the control panel for your application.
+	
 	b) Look for **TODO** items as part of the inital setup
+	
 	c) There are examples already setup and included for your convenience (widgets, shortcodes, and CPT model), if you do not wish for these to be used simple remove the include and appropriate files.
+	
 	d) Download/Clone/Install addons and modules either of your own our from our public library on github
-	d) Save your setup for your own boilerplate for future projects
+	
+	e) Save your setup for your own boilerplate for future projects
 
 3. **For documentation** on how to develop with the Div Library, checkout [**the website**](http://divblend.com/div-library/)
 

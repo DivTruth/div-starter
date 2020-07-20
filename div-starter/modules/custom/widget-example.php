@@ -12,7 +12,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-class Widget_Example extends DIV_Widget {
+class Widget_Example extends DIV\patterns\widget {
 
 	/**
 	 * @var array
