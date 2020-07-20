@@ -31,10 +31,14 @@ Quick Start
 2. **Begin Development**
 
 	a) As a boilerplate, setup and familiarize yourself with the div-starter.php as it is the control panel for your application.
+	
 	b) Look for **TODO** items as part of the inital setup
+	
 	c) There are examples already setup and included for your convenience (widgets, shortcodes, and CPT model), if you do not wish for these to be used simple remove the include and appropriate files.
+	
 	d) Download/Clone/Install addons and modules either of your own our from our public library on github
-	d) Save your setup for your own boilerplate for future projects
+	
+	e) Save your setup for your own boilerplate for future projects
 
 3. **For documentation** on how to develop with the Div Library, checkout [**the website**](http://divblend.com/div-library/)
 
